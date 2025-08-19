@@ -1,0 +1,53 @@
+﻿//Consulta para o gráfico agrupada por mês 
+EFEntities contexto;
+
+            try
+            {
+                contexto = new EFEntities();
+// var é o tipo genérico do C#
+                var lista = from d in contexto.despesa
+                        group d by new { d.tipo, d.dia.Value.Month } into g
+                           orderby g.Key.Month 
+			   select new
+                            {
+                                Tipo = g.Key.tipo.ToString(),
+                                Mês = g.Key.Month.ToString(),
+                                Preço = g.Sum(t =>t.valor).ToString(),
+                                Quantidade = g.Count().ToString()
+                              };
+
+
+//consulta com datas em linq
+
+EFEntities contexto;
+
+            try
+            {
+                contexto = new EFEntities();
+                var lista = from g in contexto.despesa where
+ g.dia >= dtpI.Value.Date && g.dia <= dtpf.Value.Date
+                  select g;
+
+
+
+var lista = from p in contexto.pessoa
+                            join b in contexto.bem on p.codigo equals b.coddono
+                            select new
+                            {
+                                p.codigo,
+                                Nome = p.nome,
+                                p.dia,
+                                CodigoBem=b.codigo,
+                                b.coddono,
+                                Descrição = b.descr,
+                                b.valor
+                            };
+
+  var lista = from p in contexto.pessoa
+                            join b in contexto.bem on p.codigo equals b.coddono
+                            group new { p, b } by new {p.codigo,p.nome } into g
+                            select new
+                            {
+                                Nome =g.Key.nome,
+                                Total = g.Sum(pt => pt.b.valor)
+                            };              
