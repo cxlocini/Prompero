@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Windows.Forms;
 
-namespace EmCRUD
+namespace ControleDeProdutos
 {
     internal static class Program
     {
@@ -10,11 +10,6 @@ namespace EmCRUD
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-
-            
-            if (!DbBootstrap.TryInitWithMessage())
-                return; 
-
             Application.Run(new Form1());
         }
     }
